@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Converter</h1>
+        <div>
+            <label for="millisecondsInput">Milliseconds:</label>
+            <input type="text" id="millisecondsInput" placeholder="Enter milliseconds">
+            <button onclick="convertToHuman()">Convert to Human Time</button>
+        </div>
+        <div>
+            <label for="humanTimeInput">Human Time (YYYY-MM-DD HH:MM:SS):</label>
+            <input type="text" id="humanTimeInput" placeholder="Enter human time">
+            <button onclick="convertToMilliseconds()">Convert to Milliseconds</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertToHuman() {
+            const milliseconds = document.getElementById('millisecondsInput').value;
+            const date = new Date(parseInt(milliseconds));
+
+            if (isNaN(date.getTime())) {
+                document.getElementById('result').innerText = 'Invalid milliseconds';
+                return;
+            }
+
+            const utcTime = date.toUTCString();
+            const localTime = date.toString();
+
+            document.getElementById('result').innerHTML = `
+                <p><strong>UTC Time:</strong> ${utcTime}</p>
+                <p><strong>Local Time:</strong> ${localTime}</p>
+            `;
+        }
+
+        function convertToMilliseconds() {
+            const humanTime = document.getElementById('humanTimeInput').value;
+            const date = new Date(humanTime);
+
+            if (isNaN(date.getTime())) {
+                document.getElementById('result').innerText = 'Invalid human time format';
+                return;
+            }
+
+            const milliseconds = date.getTime();
+
+            document.getElementById('result').innerHTML = `
+                <p><strong>Milliseconds:</strong> ${milliseconds}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
